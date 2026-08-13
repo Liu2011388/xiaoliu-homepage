@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爱摄爱摄影的小刘 - 个人官网 | 摄影分享 · 电脑知识 · 网络安全科普</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", system-ui, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f4f7fa;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        /* 头部标题 */
+        header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: #fff;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.4rem;
+            margin-bottom: 0.6rem;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.88;
+        }
+
+        /* 导航栏 */
+        nav {
+            background-color: rgba(44, 62, 80, 0.95);
+            padding: 1rem 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        nav a {
+            color: #e8edf2;
+            text-decoration: none;
+            margin: 0 1.2rem;
+            font-size: 1.05rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background-color: #3498db;
+            transform: translateX(-50%);
+            transition: width 0.35s ease;
+        }
+
+        nav a:hover {
+            color: #3498db;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* 主体容器 */
+        .container {
+            max-width: 1020px;
+            margin: 3.5rem auto;
+            padding: 0 2rem;
+        }
+
+        /* 卡片模块 */
+        .card {
+            background: #fff;
+            padding: 2.4rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            margin-bottom: 2.2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.09);
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1.4rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 3px solid #3498db;
+            display: inline-block;
+            font-size: 1.6rem;
+        }
+
+        h3 {
+            color: #34495e;
+            margin: 1.6rem 0 1rem;
+            font-size: 1.3rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.06rem;
+        }
+
+        ul {
+            padding-left: 1.6rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.9rem;
+            font-size: 1rem;
+        }
+
+        strong {
+            color: #2980b9;
+        }
+
+        /* 底部版权 */
+        footer {
+            text-align: center;
+            padding: 2.5rem 0;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: #fff;
+            margin-top: 4rem;
+        }
+
+        /* 响应式适配手机 */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.9rem;
+            }
+            nav a {
+                margin: 0 0.6rem;
+                font-size: 0.95rem;
+            }
+            .container {
+                padding: 0 1rem;
+            }
+            .card {
+                padding: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部标题 -->
+    <header>
+        <h1>爱摄爱摄影的小刘 - 个人官网</h1>
+        <p>摄影分享 · 电脑知识 · 网络安全科普</p>
+    </header>
+
+    <!-- 导航栏 -->
+    <nav>
+        <a href="#intro">网站简介</a>
+        <a href="#about">关于我</a>
+        <a href="#photo">摄影专区</a>
+        <a href="#computer">电脑知识</a>
+        <a href="#safe">网络安全</a>
+        <a href="#message">交流寄语</a>
+    </nav>
+
+    <!-- 主体内容 -->
+    <div class="container">
+        <!-- 网站简介 -->
+        <div class="card" id="intro">
+            <h2>网站简介</h2>
+            <p>大家好，我是小刘，全网昵称「爱摄爱摄影的小刘」。这是我的个人官方网站，是我记录热爱、分享所学、沉淀成长的专属空间。我专注两大核心领域：<strong>生活摄影美学记录</strong>与<strong>电脑实用技术、网络安全知识科普</strong>。在这里，我会用通俗、接地气的方式，分享真实、好用的干货内容，不堆砌晦涩理论，只做人人能看懂、能用上的分享。</p>
+        </div>
+
+        <!-- 关于我 -->
+        <div class="card" id="about">
+            <h2>关于我</h2>
+            <p>我是一名热爱生活、热爱摄影、深耕电脑技术的爱好者。摄影对我而言，是捕捉光影、定格生活美好瞬间的方式，无论是日常街拍、风光记录、人像随拍，还是摄影基础技巧、构图思路、调色教程，都是我长期探索和分享的内容。</p>
+            <p>除了摄影爱好，我深耕电脑软硬件知识、日常电脑运维技巧以及大众必备的网络安全知识。很多普通用户在使用电脑、上网过程中，常常会遇到卡顿、系统故障、软件踩坑、隐私泄露、病毒木马、网络诈骗等问题，我希望通过自己的积累，帮助大家避开数码误区、守护设备安全和个人隐私。</p>
+            <p>建站初衷：<strong>以热爱分享生活，以技术服务日常</strong>，把摄影的美好、电脑实用干货、网络安全常识，全部整理在这里，方便每一位朋友学习、参考、交流。</p>
+        </div>
+
+        <!-- 摄影专区 -->
+        <div class="card" id="photo">
+            <h2>摄影专区（爱摄分享）</h2>
+            <p>主打零基础友好的摄影内容，适合摄影新手、日常拍照爱好者。</p>
+            <ul>
+                <li><strong>摄影作品展示</strong>：日常风光、生活随拍、人像纪实原创作品，持续更新个人摄影习作与成片。</li>
+                <li><strong>零基础摄影教程</strong>：手机/相机拍照技巧、构图法则、光影运用、拍照避坑指南。</li>
+                <li><strong>后期调色修图</strong>：简单易上手的修图思路、调色参数、手机修图、电脑LR/PS基础教程。</li>
+                <li><strong>摄影心得分享</strong>：拍照思路、审美提升、新手常见误区、器材选购避坑干货。</li>
+            </ul>
+        </div>
+
+        <!-- 电脑知识专区 -->
+        <div class="card" id="computer">
+            <h2>电脑知识专区</h2>
+            <p>专注普通人能用、好用、实用的电脑技术，拒绝专业晦涩，主打日常实用。</p>
+            <ul>
+                <li><strong>电脑基础运维</strong>：系统优化、电脑卡顿解决、磁盘清理、开机加速、软件安装与卸载规范。</li>
+                <li><strong>软硬件科普</strong>：电脑配置讲解、装机常识、硬件避坑、笔记本/台式机选购建议。</li>
+                <li><strong>实用软件推荐</strong>：高效办公、修图、剪辑、工具类优质软件，无捆绑、无套路干货推荐。</li>
+            </ul>
+        </div>
+
+        <!-- 网络安全专区 -->
+        <div class="card" id="safe">
+            <h2>网络安全专区</h2>
+            <p>面向普通网民的安全科普，人人都需要的上网安全、隐私保护知识。</p>
+            <ul>
+                <li><strong>个人隐私保护</strong>：浏览器安全设置、账号密码安全、个人信息防泄露技巧。</li>
+                <li><strong>电脑安全防护</strong>：杀毒软件选择、病毒木马防范、弹窗广告拦截、恶意软件清理。</li>
+                <li><strong>网络防骗科普</strong>：常见网络诈骗套路、钓鱼网站识别、陌生链接与文件风险辨别。</li>
+                <li><strong>日常上网安全规范</strong>：安全下载、安全上网、U盘使用安全、系统漏洞防护常识。</li>
+            </ul>
+        </div>
+
+        <!-- 网站定位 -->
+        <div class="card">
+            <h2>网站定位</h2>
+            <p>这是<strong>爱摄爱摄影的小刘个人官方原创分享站</strong>，非商业盈利网站，纯粹是个人兴趣沉淀、知识汇总、作品展示平台。全站内容均为实测、实学、实战总结，主打：真实、简单、实用、接地气。</p>
+        </div>
+
+        <!-- 交流寄语 -->
+        <div class="card" id="message">
+            <h2>交流与寄语</h2>
+            <p>热爱摄影，是为了发现生活的温柔；钻研电脑与网络安全，是为了守护日常的安稳。在这里，我会持续更新摄影作品与教程、电脑实用技巧、网络安全科普，和每一位热爱生活、喜欢学习的朋友共同成长。</p>
+            <p>欢迎大家常来做客，一起学摄影、学电脑、学安全，远离套路、提升技能、记录美好。</p>
+        </div>
+    </div>
+
+    <!-- 底部版权 -->
+    <footer>
+        <p>© 2026 爱摄爱摄影的小刘 个人官网 | 原创内容 · 禁止盗用 · 专注摄影与电脑安全科普</p>
+    </footer>
+</body>
+</html>
+
+
+ 
