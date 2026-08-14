@@ -3,318 +3,544 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>爱摄影的小刘 | 摄影 · 电脑安全技术</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <title>爱摄影的小刘 | 个人官网</title>
     <style>
-        /* 全局动画设置 */
-        *{
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        body {
+            background: #0c121c;
+            color: #e6edf7;
+            line-height: 1.8;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
-        body{
-            background:#050508;
-            color:#eee;
-            overflow-x:hidden;
-            font-family:system-ui, sans-serif;
+
+        /* 背景粒子画布 */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
         }
-        /* 粒子背景画布 */
-        #particles{
-            position:fixed;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            z-index:0;
-            pointer-events:none;
+
+        .page-wrapper {
+            position: relative;
+            z-index: 1;
         }
-        .container-wrap{
-            position:relative;
-            z-index:2;
+
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(12, 18, 28, 0.92);
+            border-bottom: 1px solid #202a3b;
+            z-index: 999;
+            transition: all 0.4s ease;
         }
-        /* 渐变文字动画 */
-        .gradient-text{
-            background: linear-gradient(90deg, #4cc9f0,#4361ee,#f72585);
-            background-size: 200% auto;
-            -webkit-background-clip:text;
-            color:transparent;
+
+        .logo {
+            font-size: 22px;
+            color: #40b8ff;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-link a {
+            color: #b0c4de;
+            text-decoration: none;
+            margin-left: 28px;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .nav-link a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            left: 0;
+            bottom: -4px;
+            background-color: #40b8ff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link a:hover {
+            color: #40b8ff;
+        }
+
+        .nav-link a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 60px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroFadeIn 1.2s ease forwards;
+        }
+
+        @keyframes heroFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            background: linear-gradient(90deg,#40b8ff,#36e0d0);
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 16px;
             animation: gradientMove 4s linear infinite;
         }
-        @keyframes gradientMove{
-            0%{background-position:0% center;}
-            100%{background-position:200% center;}
+
+        @keyframes gradientMove {
+            0% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+            100% { filter: brightness(1); }
         }
-        /* 上浮动画 */
-        .animate-float{
-            animation: float 5s ease-in-out infinite;
+
+        .hero p.slogan {
+            font-size: 20px;
+            color: #94a9c3;
+            max-width: 650px;
+            opacity: 0;
+            animation: sloganIn 1.5s ease forwards;
+            animation-delay: 0.5s;
         }
-        @keyframes float{
-            0%,100%{transform: translateY(0px);}
-            50%{transform: translateY(-12px);}
+
+        @keyframes sloganIn {
+            to { opacity: 1; }
         }
-        /* 卡片发光悬浮 */
-        .tech-card{
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border:1px solid rgba(76,201,240,0.15);
+
+        .wrap {
+            width: 86%;
+            margin: 0 auto;
+            padding: 80px 0;
         }
-        .tech-card:hover{
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 0 30px rgba(76,201,240,0.25);
-            border-color:rgba(76,201,240,0.5);
+
+        .section-title {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 50px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.7s ease;
         }
-        /* 渐入动画 */
-        .fade-in{
-            opacity:0;
+
+        .section-title.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title::after {
+            content: "";
+            width: 80px;
+            height: 3px;
+            background: #40b8ff;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -12px;
+            transition: width 0.4s ease;
+        }
+
+        .section-title:hover::after {
+            width: 120px;
+        }
+
+        .about-content {
+            max-width: 780px;
+            margin: 0 auto;
+            color: #c0d1e8;
+            font-size: 17px;
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.7s ease;
+        }
+
+        .about-content.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-content p {
+            margin-bottom: 18px;
+        }
+
+        .skill-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+            gap: 28px;
+            margin-top: 30px;
+        }
+
+        .skill-card {
+            border: 1px solid #273449;
+            padding: 30px;
+            border-radius: 12px;
+            background: rgba(18, 27, 41, 0.85);
+            opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s ease;
+            transition: all 0.6s ease;
+            backdrop-filter: blur(4px);
         }
-        .fade-in.active{
+
+        .skill-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .skill-card:hover {
+            border-color: #40b8ff;
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(64, 184, 255, 0.12);
+        }
+
+        .skill-card h3 {
+            color: #40b8ff;
+            margin-bottom: 14px;
+            font-size: 20px;
+        }
+
+        .contact-area {
+            text-align:center;
+            color:#c0d1e8;
+            font-size:17px;
+            opacity:0;
+            transform: translateY(25px);
+            transition: all 0.7s ease;
+        }
+
+        .contact-area.show {
             opacity:1;
             transform: translateY(0);
         }
-        /* 分割线流光 */
-        .stream-line{
-            position:relative;
-            height:1px;
-            background:rgba(255,255,255,0.1);
-            overflow:hidden;
+
+        .social-box {
+            margin-top:30px;
+            display:flex;
+            gap:24px;
+            justify-content:center;
+            flex-wrap:wrap;
         }
-        .stream-line::after{
-            content:"";
-            position:absolute;
-            width:150px;
-            height:100%;
-            left:-150px;
-            background:linear-gradient(90deg,transparent,#4cc9f0,transparent);
-            animation: stream 3s infinite linear;
+
+        .social-btn {
+            padding:14px 32px;
+            border-radius:8px;
+            text-decoration:none;
+            font-weight:bold;
+            font-size:16px;
+            transition:all 0.4s ease;
+            display:flex;
+            align-items:center;
+            gap:10px;
         }
-        @keyframes stream{
-            0%{left:-150px;}
-            100%{left:100%;}
+
+        .github-btn {
+            background:#171515;
+            color:#fff;
+            border:1px solid #333;
         }
-        /* 导航下划线动效 */
-        .nav-link{
-            position:relative;
+
+        .github-btn:hover {
+            background:#242424;
+            transform:translateY(-5px);
+            box-shadow:0 6px 20px rgba(255,255,255,0.1);
         }
-        .nav-link::after{
-            content:"";
-            width:0;
-            height:2px;
-            background:#4cc9f0;
-            position:absolute;
-            bottom:-4px;
-            left:0;
-            transition: width 0.3s ease;
+
+        .ks-btn {
+            background:#FF4400;
+            color:#fff;
+            border:1px solid #ff6622;
         }
-        .nav-link:hover::after{
-            width:100%;
+
+        .ks-btn:hover {
+            background:#ff551a;
+            transform:translateY(-5px);
+            box-shadow:0 6px 20px rgba(255,68,0,0.25);
         }
-        /* 按钮脉冲光效 */
-        .btn-pulse{
-            position:relative;
-            overflow:hidden;
+
+        footer {
+            text-align: center;
+            padding: 35px;
+            border-top: 1px solid #202a3b;
+            color: #788ca8;
+            font-size: 15px;
+            margin-top:40px;
         }
-        .btn-pulse::before{
-            content:"";
-            position:absolute;
-            inset:0;
-            background: #4cc9f0;
-            opacity:0.2;
-            transform: scale(0);
-            border-radius:inherit;
-            transition:0.4s;
+
+        ::-webkit-scrollbar {
+            width: 6px;
         }
-        .btn-pulse:hover::before{
-            transform: scale(1);
+
+        ::-webkit-scrollbar-track {
+            background: #0c121c;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #40b8ff;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-link {
+                display: flex;
+                gap: 12px;
+            }
+
+            .nav-link a {
+                margin-left: 0;
+                font-size: 14px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p.slogan {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 <body>
-<canvas id="particles"></canvas>
-<div class="container-wrap">
-    <!-- 导航栏 -->
-    <header class="fixed top-0 left-0 w-full backdrop-blur-md bg-black/40 z-50 border-b border-cyan-900/30">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-xl font-bold gradient-text">爱摄影的小刘</a>
-            <nav class="hidden md:flex gap-8">
-                <a href="#home" class="nav-link">首页</a>
-                <a href="#about" class="nav-link">关于我</a>
-                <a href="#tech" class="nav-link">电脑技术 & 安全</a>
-                <a href="#contact" class="nav-link">联系我</a>
-            </nav>
-            <button class="md:hidden text-xl">
-                <i class="fa fa-bars"></i>
-            </button>
-        </div>
-    </header>
+    <!-- 背景动态粒子 -->
+    <canvas id="particles-canvas"></canvas>
 
-    <!-- 首屏英雄区 -->
-    <section id="home" class="min-h-screen flex items-center justify-center px-6 pt-20">
-        <div class="text-center fade-in">
-            <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-bold gradient-text animate-float mb-6">
-                爱摄影的小刘
-            </h1>
-            <div class="stream-line max-w-xl mx-auto mb-6"></div>
-            <p class="text-[clamp(1rem,2vw,1.3rem)] text-gray-300 max-w-2xl mx-auto mb-10">
-                捕捉世间光影 · 探索电脑技术 · 专注网络安全
-            </p>
-            <div class="flex flex-wrap gap-4 justify-center">
-                <a href="#about" class="btn-pulse border border-cyan-400/50 px-7 py-3 rounded-full hover:text-cyan-300 transition-all">
-                    <i class="fa fa-user mr-2"></i>了解我
-                </a>
-                <a href="#tech" class="btn-pulse border border-pink-400/50 px-7 py-3 rounded-full hover:text-pink-300 transition-all">
-                    <i class="fa fa-shield mr-2"></i>电脑安全技术分享
-                </a>
+    <div class="page-wrapper">
+        <nav>
+            <div class="logo">爱摄影的小刘</div>
+            <div class="nav-link">
+                <a href="#home">首页</a>
+                <a href="#about">关于我</a>
+                <a href="#skill">兴趣领域</a>
+                <a href="#contact">社交主页</a>
             </div>
-        </div>
-    </section>
+        </nav>
 
-    <!-- 关于我 -->
-    <section id="about" class="py-24 px-6">
-        <div class="max-w-6xl mx-auto fade-in">
-            <h2 class="text-4xl font-bold mb-3 gradient-text">关于我</h2>
-            <div class="stream-line w-36 mb-10"></div>
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <p class="text-gray-300 leading-relaxed mb-5">
-                        大家好，我是小刘，网络ID：爱摄影的小刘。
-                    </p>
-                    <p class="text-gray-300 leading-relaxed mb-5">
-                        摄影是我的热爱，热衷于记录生活风景、日常瞬间，用镜头定格转瞬即逝的光线与画面。
-                    </p>
-                    <p class="text-gray-300 leading-relaxed">
-                        同时深耕电脑领域，爱好计算机基础技术、系统运维、电脑安全防护，研究系统优化、网络安全常识，分享实用电脑知识，崇尚安全、稳定、干净的数字环境。
-                    </p>
+        <section class="hero" id="home">
+            <h1>爱摄影的小刘</h1>
+            <p class="slogan">以镜头捕捉世间光影，以技术守护数字安全<br>一半热爱摄影，一半探索网络安全</p>
+        </section>
+
+        <section class="wrap" id="about">
+            <h2 class="section-title">关于我</h2>
+            <div class="about-content">
+                <p>大家好，我是小刘，网络昵称「爱摄影的小刘」。摄影是陪伴我多年的核心爱好，只要有空我就会带上相机穿梭在城市街巷、郊外山野、公园湖畔，用心捕捉生活里转瞬即逝的风景、市井烟火、街头路人与温柔落日。相比刻意摆拍的商业画面，我更偏爱纪实随拍，坚信最动人的画面永远源于不加修饰的真实日常。闲暇时我会花大量时间钻研光影逻辑、构图技巧、色彩搭配，同时学习LR、PS后期调色，不断打磨自己的拍摄审美，想用镜头留住每一段不可复刻的人间温柔。</p>
+
+                <p>除了摄影创作之外，我对计算机相关技术抱有浓厚的探索欲，长期自学电脑安全相关知识。我熟练掌握个人电脑基础防护手段，学习系统漏洞规避、恶意软件识别、个人数据加密、家庭局域网安全等内容，深知当下数字环境下设备与隐私安全的重要性。平时我很喜欢折腾电脑软硬件，尝试操作系统优化、本地静态网站部署、流媒体推流调试、小型本地服务搭建等实操项目，遇到技术难题会主动查阅文档、反复测试，享受独立解决各类电脑问题带来的成就感。</p>
+
+                <p>在我眼中，摄影与计算机安全是两种互补的爱好：摄影是向外行走，奔赴山海，用镜头记录世界百态；电脑技术是向内深耕，钻研逻辑，构筑安全可靠的数字边界。文艺创作与技术理性并不冲突，二者相互调剂，丰富我的日常生活。我始终保持持续学习的心态，愿意长期沉淀摄影与计算机知识，也十分欢迎各路摄影爱好者、网络安全同好与我交流经验、分享心得。</p>
+            </div>
+        </section>
+
+        <section class="wrap" id="skill">
+            <h2 class="section-title">兴趣领域</h2>
+            <div class="skill-box">
+                <div class="skill-card">
+                    <h3>摄影创作</h3>
+                    <p>擅长城市风光、户外纪实、街头随拍、日常人像四类拍摄。深耕自然光运用、画面层次构图、氛围感调色，熟练使用后期软件优化照片光影与色彩。日常喜欢户外实地取景，追逐日出、晚霞、城市夜景，坚持用镜头讲述普通人的生活故事，持续积累实拍经验提升画面表现力。</p>
                 </div>
-                <div class="tech-card rounded-xl p-8 bg-white/5 backdrop-blur">
-                    <h3 class="text-xl mb-4 text-cyan-300"><i class="fa fa-star mr-2"></i>个人爱好清单</h3>
-                    <ul class="space-y-3 text-gray-300">
-                        <li><i class="fa fa-camera text-cyan-400 w-6"></i>风光 / 纪实摄影</li>
-                        <li><i class="fa fa-desktop text-cyan-400 w-6"></i>电脑系统调试、硬件折腾</li>
-                        <li><i class="fa fa-lock text-cyan-400 w-6"></i>计算机安全、隐私防护</li>
-                        <li><i class="fa fa-code text-cyan-400 w-6"></i>流媒体、直播环境搭建</li>
-                    </ul>
+                <div class="skill-card">
+                    <h3>计算机安全防护</h3>
+                    <p>具备个人终端安全基础能力，掌握系统日常加固、病毒与恶意程序排查、隐私文件保护、基础网络风险识别。持续跟进基础安全科普内容，学习钓鱼链接辨别、账号安全防护、路由器安全配置等实用技能，养成规范、安全的电脑使用习惯，能够独立处理常见设备安全隐患。</p>
+                </div>
+                <div class="skill-card">
+                    <h3>电脑硬件与系统调试</h3>
+                    <p>擅长台式机硬件组装、系统重装优化、磁盘分区管理、驱动调试、轻量化系统配置。喜欢折腾各类小众工具软件，研究低配电脑性能优化方案，尝试本地静态网站搭建、简单前端页面编写，动手能力强，可独立完成电脑各类基础故障排查与修复。</p>
+                </div>
+                <div class="skill-card">
+                    <h3>直播与流媒体技术</h3>
+                    <p>熟练使用OBS Studio进行画面录制、直播推流参数调试，掌握采集卡、摄像头画质优化、音频降噪、滤镜调色等操作。专门研究低成本直播搭建方案，针对入门设备做画质提升优化，能够独立配置稳定的本地录制与线上直播环境，适配摄影画面直播分享场景。</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 电脑技术 & 安全板块 -->
-    <section id="tech" class="py-24 px-6">
-        <div class="max-w-6xl mx-auto fade-in">
-            <h2 class="text-4xl font-bold mb-3 gradient-text">电脑技术 · 网络安全</h2>
-            <div class="stream-line w-36 mb-10"></div>
-            <p class="text-gray-300 mb-10 max-w-2xl">
-                分享电脑优化、系统调试、隐私保护、日常安全防范知识，远离病毒、恶意软件，打造安全稳定的电脑环境，源码项目存放于GitHub仓库。
-            </p>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="tech-card rounded-xl p-7 bg-white/5">
-                    <div class="text-3xl text-cyan-400 mb-4"><i class="fa fa-shield"></i></div>
-                    <h3 class="text-xl mb-3">电脑安全防护</h3>
-                    <p class="text-gray-400 text-sm">日常杀毒、隐私设置、钓鱼识别、恶意程序防范科普。</p>
+        <section class="wrap" id="contact">
+            <h2 class="section-title">社交主页</h2>
+            <div class="contact-area">
+                <p>欢迎前往我的社交平台查看摄影作品与技术分享内容，随时留言交流！</p>
+                <div class="social-box">
+                    <a href="https://github.com/Liu2011388/xiaoliu-homepage" target="_blank" class="social-btn github-btn">
+                        <span>GitHub</span>
+                    </a>
+                    <a href="https://www.kuaishou.com/profile/3xuypsbn2adtfj9?source=NewReco" target="_blank" class="social-btn ks-btn">
+                        <span>快手主页</span>
+                    </a>
                 </div>
-                <div class="tech-card rounded-xl p-7 bg-white/5">
-                    <div class="text-3xl text-pink-400 mb-4"><i class="fa fa-windows"></i></div>
-                    <h3 class="text-xl mb-3">系统优化调试</h3>
-                    <p class="text-gray-400 text-sm">老旧电脑性能优化、系统精简、驱动与故障排查方案。</p>
-                </div>
-                <div class="tech-card rounded-xl p-7 bg-white/5">
-                    <div class="text-3xl text-teal-400 mb-4"><i class="fa fa-wifi"></i></div>
-                    <h3 class="text-xl mb-3">网络与流媒体</h3>
-                    <p class="text-gray-400 text-sm">局域网搭建、投屏、直播推流、媒体服务搭建经验。</p>
-                </div>
+                <p style="margin-top:20px;color:#94a9c3;">快手账号：爱摄影的小刘｜Github仓库：xiaoliu-homepage（本官网源码开源）</p>
             </div>
-            <div class="text-center mt-10">
-                <a href="https://github.com/Liu2011388/xiaoliu-homepage.git" target="_blank" class="btn-pulse border border-teal-400/50 px-7 py-3 rounded-full inline-block">
-                    <i class="fa fa-github mr-2"></i>访问GitHub源码仓库
-                </a>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 联系区域 -->
-    <section id="contact" class="py-24 px-6 bg-black/20">
-        <div class="max-w-4xl mx-auto text-center fade-in">
-            <h2 class="text-4xl font-bold mb-3 gradient-text">联系我</h2>
-            <div class="stream-line w-36 mx-auto mb-10"></div>
-            <p class="text-gray-300 mb-8">摄影交流、电脑技术问题欢迎一起探讨！</p>
-            <div class="flex justify-center gap-6 text-2xl">
-                <!-- 快手链接 -->
-                <a href="https://www.kuaishou.com/profile/3xuypsbn2adtfj9?source=NewReco" target="_blank" class="hover:text-cyan-400 transition-all transform hover:scale-110">
-                    <i class="fa fa-camera-retro"></i>
-                </a>
-                <!-- GitHub链接 -->
-                <a href="https://github.com/Liu2011388/xiaoliu-homepage.git" target="_blank" class="hover:text-teal-400 transition-all transform hover:scale-110">
-                    <i class="fa fa-github"></i>
-                </a>
-            </div>
-        </div>
-    </section>
+        <footer>
+            © 2026 爱摄影的小刘 | 个人官方网站 ｜ 本站源码开源托管于GitHub
+        </footer>
+    </div>
 
-    <!-- 页脚 -->
-    <footer class="py-8 text-center border-t border-gray-800 text-gray-500">
-        <p>© 2026 爱摄影的小刘 | 摄影爱好者 & 电脑安全技术爱好者</p>
-    </footer>
-</div>
+    <script>
+        // 背景动态粒子效果
+        const canvas = document.getElementById("particles-canvas");
+        const ctx = canvas.getContext("2d");
 
-<script>
-// 粒子背景动画
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-function resizeCanvas(){
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize',resizeCanvas);
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 150 };
 
-let particles = [];
-class Particle{
-    constructor(){
-        this.x = Math.random()*canvas.width;
-        this.y = Math.random()*canvas.height;
-        this.radius = Math.random()*1.3+0.2;
-        this.speedX = (Math.random()-0.5)*0.6;
-        this.speedY = (Math.random()-0.5)*0.6;
-        this.color = Math.random()>0.5 ? "#4cc9f0" : "#f72585";
-    }
-    update(){
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if(this.x<0||this.x>canvas.width) this.speedX *= -1;
-        if(this.y<0||this.y>canvas.height) this.speedY *= -1;
-    }
-    draw(){
-        ctx.beginPath();
-        ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-    }
-}
-// 初始化粒子
-for(let i=0;i<120;i++) particles.push(new Particle());
-function animateParticles(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particles.forEach(p=>{
-        p.update();
-        p.draw();
-    })
-    requestAnimationFrame(animateParticles);
-}
-animateParticles();
-
-// 滚动渐入动画
-const fadeItems = document.querySelectorAll('.fade-in');
-function checkScroll(){
-    fadeItems.forEach(item=>{
-        const rect = item.getBoundingClientRect();
-        if(rect.top < window.innerHeight*0.85){
-            item.classList.add('active');
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
-    })
-}
-window.addEventListener('scroll',checkScroll);
-checkScroll();
-</script>
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        window.addEventListener("mousemove", function(e) {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        window.addEventListener("mouseout", function() {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.6;
+                this.speedY = (Math.random() - 0.5) * 0.6;
+                this.color = Math.random() > 0.5 ? "rgba(64, 184, 255, 0.6)" : "rgba(54, 224, 208, 0.6)";
+            }
+
+            update() {
+                if (mouse.x !== null && mouse.y !== null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < mouse.radius) {
+                        let forceDirectionX = dx / distance;
+                        let forceDirectionY = dy / distance;
+                        let maxDistance = mouse.radius;
+                        let force = (maxDistance - distance) / maxDistance;
+
+                        this.x += forceDirectionX * force * 2;
+                        this.y += forceDirectionY * force * 2;
+                    }
+                }
+
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            let numberOfParticles = Math.floor((canvas.width * canvas.height) / 9000);
+
+            for (let i = 0; i < numberOfParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    let dx = particles[i].x - particles[j].x;
+                    let dy = particles[i].y - particles[j].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        let opacity = 1 - distance / 100;
+                        ctx.strokeStyle = `rgba(64, 184, 255, ${opacity * 0.35})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            connectParticles();
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+
+        // 滚动入场动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll(".section-title, .about-content, .skill-card, .contact-area").forEach(el => {
+            observer.observe(el);
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener("scroll", () => {
+            const nav = document.querySelector("nav");
+            if (window.scrollY > 80) {
+                nav.style.background = "rgba(12, 18, 28, 0.98)";
+                nav.style.boxShadow = "0 4px 15px rgba(0,0,0,0.3)";
+            } else {
+                nav.style.background = "rgba(12, 18, 28, 0.92)";
+                nav.style.boxShadow = "none";
+            }
+        });
+    </script>
 </body>
 </html>
